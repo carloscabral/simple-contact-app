@@ -33,6 +33,12 @@ angular.module('starter', ['ionic'])
 .controller('PeopleCtrl', function($scope, people){
   $scope.people = people.list;
 
+  $scope.addPerson = function(){
+    people.add().then(function(){
+      $scope.$broadcast('scroll.refreshComplete');
+    });
+  };
+
 })
 
 .factory('people', function($http, $q){

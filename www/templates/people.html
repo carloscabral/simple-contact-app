@@ -1,5 +1,6 @@
 <ion-view title="People">
 	<ion-content>
+	<ion-refresher on-refresh="addPerson()"></ion-refresher>
 		<ion-list>
 			<ion-item class="item-avatar" ng-repeat="person in people">
 				<img ng-src="{{person.picture.thumbnail}}">
