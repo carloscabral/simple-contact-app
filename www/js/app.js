@@ -17,3 +17,43 @@ angular.module('starter', ['ionic'])
     }
   });
 })
+
+
+.config(function($stateProvider, $urlRouterProvider) {
+
+  $stateProvider.state('people', {
+    url: '/people',
+    controller: 'PeopleCtrl',
+    templateUrl: 'templates/people.html'
+  });
+  $urlRouterProvider.otherwise('/people');
+
+})
+
+.controller('PeopleCtrl', function($scope, people){
+  $scope.people = people.list;
+
+})
+
+.factory('people', function($http, $q){
+  var people = {};
+
+  people.list = [];
+
+  people.add = function(){
+    return $http.get('http://api.randomuser.me')
+    .then(function(response){
+      people.list.push(response.data.results[0].user);
+    });
+  };
+
+  people.read = $q.all([
+    people.add(),
+    people.add(),
+    people.add()
+  ]);
+
+  return people;
+});
+
+
