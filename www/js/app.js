@@ -46,10 +46,20 @@ angular.module('starter', ['ionic'])
 
 .controller('PersonCtrl', function($scope, person, people){
   $scope.person = person;
+
 })
 
-.controller('PeopleCtrl', function($scope, people){
+.controller('PeopleCtrl', function($scope, people, $ionicLoading){
   $scope.people = people.list;
+
+  $ionicLoading.show({
+    template: '<i class="ion-loading-c"></i><br/>Loading...'
+  });
+
+  people.ready.then(function(){
+    console.log(true);
+    $ionicLoading.hide();
+  });
 
   $scope.addPerson = function(){
     people.add().then(function(){
