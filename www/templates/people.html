@@ -2,7 +2,7 @@
 	<ion-content>
 	<ion-refresher on-refresh="addPerson()"></ion-refresher>
 		<ion-list>
-			<ion-item class="item-avatar" ng-repeat="person in people">
+			<ion-item class="item-avatar" ng-repeat="person in people" ng-href="#/person/{{$index}}" >
 				<img ng-src="{{person.picture.thumbnail}}">
 				<h2>{{person.name.first}}</h2>
 				<p>{{person.email}}</p>

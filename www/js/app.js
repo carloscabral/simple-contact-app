@@ -21,13 +21,31 @@ angular.module('starter', ['ionic'])
 
 .config(function($stateProvider, $urlRouterProvider) {
 
-  $stateProvider.state('people', {
+  $stateProvider
+  .state('people', {
     url: '/people',
     controller: 'PeopleCtrl',
     templateUrl: 'templates/people.html'
+  })
+  .state('person', {
+    url: '/person/:index',
+    controller: 'PersonCtrl',
+    templateUrl: 'templates/person.html',
+    resolve: {
+      person: function($stateParams, people){
+        return people.ready.then(function(){
+          return people.list[+$stateParams.index];
+        });
+      }
+    }
   });
+
   $urlRouterProvider.otherwise('/people');
 
+})
+
+.controller('PersonCtrl', function($scope, person, people){
+  $scope.person = person;
 })
 
 .controller('PeopleCtrl', function($scope, people){
@@ -54,7 +72,7 @@ angular.module('starter', ['ionic'])
     });
   };
 
-  people.read = $q.all([
+  people.ready = $q.all([
     people.add(),
     people.add(),
     people.add()
